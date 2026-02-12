@@ -1,170 +1,265 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { Instagram, Facebook, Twitter } from 'lucide-react';
+import Image from 'next/image';
+import { ArrowRight } from 'lucide-react';
+
+const SKIP_FRAMES = 10;
+const VIDEO_FPS = 30;
+const SKIP_TIME = SKIP_FRAMES / VIDEO_FPS;
 
 export default function HeroSection() {
     const [isVisible, setIsVisible] = useState(false);
+    const [videoReady, setVideoReady] = useState(false);
+    const videoRef = useRef<HTMLVideoElement | null>(null);
 
     useEffect(() => {
         setIsVisible(true);
     }, []);
 
-    const sideImages = [
+    useEffect(() => {
+        const video = videoRef.current;
+        if (!video) return;
+
+        video.muted = true;
+        video.volume = 0;
+        video.defaultMuted = true;
+
+        let hasSeeked = false;
+
+        const startPlaybackCorrectly = async () => {
+            try {
+                await video.play();
+                requestAnimationFrame(() => {
+                    video.currentTime = SKIP_TIME;
+                });
+            } catch {
+                // autoplay blocked
+            }
+        };
+
+        const handleSeeked = () => {
+            if (!hasSeeked && video.currentTime >= SKIP_TIME) {
+                hasSeeked = true;
+                setVideoReady(true);
+            }
+        };
+
+        const handleTimeUpdate = () => {
+            if (video.duration && video.currentTime >= video.duration - 0.05) {
+                video.currentTime = SKIP_TIME;
+                video.play().catch(() => { });
+            }
+        };
+
+        const handleVisibilityChange = () => {
+            document.hidden ? video.pause() : video.play().catch(() => { });
+        };
+
+        video.addEventListener('loadeddata', startPlaybackCorrectly);
+        video.addEventListener('seeked', handleSeeked);
+        video.addEventListener('timeupdate', handleTimeUpdate);
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+
+        return () => {
+            video.removeEventListener('loadeddata', startPlaybackCorrectly);
+            video.removeEventListener('seeked', handleSeeked);
+            video.removeEventListener('timeupdate', handleTimeUpdate);
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+        };
+    }, []);
+
+    const cards = [
         {
             id: 1,
-            src: '/images/sushi-roll.jpg',
+            src: '/assets/menu.webp',
             alt: 'Sushi Roll',
-            label: 'MENU',
+            label: 'Menu',
             link: '/menu',
         },
         {
             id: 2,
-            src: '/images/restaurant-ambiance.jpg',
+            src: '/assets/reservation.webp',
             alt: 'Restaurant Ambiance',
-            label: 'RESERVATION',
+            label: 'Reservations',
             link: '/book-a-table',
         },
         {
             id: 3,
-            src: '/images/restaurant-interior.jpg',
+            src: '/assets/restaurant.webp',
             alt: 'Restaurant Interior',
-            label: 'OUR RESTAURANT',
+            label: 'Our Restaurant',
             link: '/about',
         },
     ];
 
     return (
-        <section className="relative min-h-screen w-full overflow-hidden bg-[#1a1a1a]">
-            {/* Background Image */}
-            <div className="absolute inset-0">
-                <div
-                    className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                    style={{
-                        backgroundImage: 'url(/images/hero-bg.jpg)',
-                        filter: 'brightness(0.4)',
-                    }}
-                />
-                <div className="absolute inset-0 bg-linear-to-r from-black/80 via-black/50 to-transparent" />
-            </div>
+        <section
+            className="relative mx-auto w-full max-h-screen overflow-hidden bg-black"
+            role="banner"
+            aria-label="Qiolia Demo Website for Businesses"
+        >
+            {/* Background Image (shown until video is ready) */}
+            <Image
+                src="/assets/hero.webp"
+                alt="A black table with different dishes photo taken from top"
+                fill
+                priority
+                className={`object-cover object-[80%_20%] transition-opacity duration-700 ${videoReady ? 'opacity-0' : 'opacity-100'
+                    }`}
+            />
 
-            {/* Main Content Grid */}
-            <div className="relative min-h-screen grid grid-cols-1 lg:grid-cols-12 gap-0">
-                {/* Left Side - Hero Text */}
-                <div className="lg:col-span-7 flex items-center justify-center lg:justify-start px-6 sm:px-12 lg:px-20 py-32 lg:py-0">
-                    <div
-                        className={`space-y-8 transform transition-all duration-1000 ${isVisible
-                                ? 'translate-y-0 opacity-100'
-                                : 'translate-y-12 opacity-0'
-                            }`}
-                    >
-                        {/* Hero Image - Bowl */}
-                        <div className="relative w-full max-w-md mx-auto lg:mx-0">
-                            <div className="relative aspect-square rounded-full overflow-hidden shadow-2xl">
-                                <img
-                                    src="/images/sushi-bowl.jpg"
-                                    alt="Sushi Bowl"
-                                    className="w-full h-full object-cover"
-                                />
-                                <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent" />
-                            </div>
-                        </div>
+            {/* Background Video (optional - uncomment to use) */}
+            {/* <video
+                ref={videoRef}
+                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+                    videoReady ? 'opacity-100' : 'opacity-0'
+                }`}
+                style={{ objectPosition: 'center 25%' }}
+                playsInline
+                preload="auto"
+                poster="/assets/hero3.webp"
+                aria-hidden="true"
+            >
+                <source src="/assets/hero-bg.mp4" type="video/mp4" />
+            </video> */}
 
-                        {/* Text Content */}
-                        <div className="space-y-6">
-                            <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-light text-white tracking-tight leading-none">
-                                SUSHI
-                                <br />
-                                <span className="tracking-[0.15em]">SENSATION</span>
+            {/* Overlay gradient for better text readability */}
+            <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/50 to-black/70" />
+
+            {/* Content Container */}
+            <div className="relative min-h-screen flex flex-col">
+                {/* Mobile Layout - Stacked vertically */}
+                <div className="md:hidden flex flex-col h-screen">
+                    {/* Hero Section - Takes available space */}
+                    <div className="flex-1 flex items-end justify-center p-6 pb-8">
+                        <div
+                            className={`space-y-3 text-center transition-all duration-1000 delay-300 ${isVisible
+                                ? 'opacity-100 translate-y-0'
+                                : 'opacity-0 translate-y-8'
+                                }`}
+                        >
+                            <h1 className="text-foreground text-5xl font-light tracking-tight leading-none">
+                                A tasteful culinary experience
                             </h1>
-                            <p className="text-white/70 text-base sm:text-lg font-light max-w-md leading-relaxed">
-                                Experience the art of authentic Japanese cuisine crafted with
-                                precision and passion.
+                            <p className="text-muted-foreground text-lg font-light tracking-wide">
+                                Experience the authentic flavors of the world
                             </p>
                         </div>
+                    </div>
 
-                        {/* CTA Button */}
-                        <div className="pt-4">
+                    {/* Cards Section - Fixed at bottom */}
+                    <div className="bg-gradient-to-t from-background via-background/95 to-transparent p-6 pt-8 pb-8 space-y-4">
+                        {cards.map((card, index) => (
                             <Link
-                                href="/book-a-table"
-                                className="inline-block px-10 py-4 bg-white text-black font-light text-sm tracking-[0.2em] hover:bg-white/90 transition-all duration-300 hover:tracking-[0.25em] shadow-lg hover:shadow-xl"
+                                key={card.id}
+                                href={card.link}
+                                className={`group relative h-32 overflow-hidden rounded-lg transition-all duration-700 block ${isVisible
+                                    ? 'opacity-100 translate-y-0'
+                                    : 'opacity-0 translate-y-8'
+                                    } hover:scale-[1.02] hover:shadow-xl`}
+                                style={{
+                                    transitionDelay: `${(index + 4) * 150}ms`,
+                                }}
                             >
-                                RESERVE A TABLE
+                                {/* Card Image */}
+                                <div className="absolute inset-0">
+                                    <img
+                                        src={card.src}
+                                        alt={card.alt}
+                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                    />
+                                </div>
+
+                                {/* Gradient Overlay */}
+                                <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/40 to-transparent" />
+
+                                {/* Hover Overlay */}
+                                <div className="absolute inset-0 bg-background/0 group-hover:bg-primary/10 transition-colors duration-300" />
+
+                                {/* Card Label */}
+                                <div className="absolute bottom-0 right-0 p-4 flex items-center gap-2">
+                                    <span className="text-foreground text-sm font-light tracking-wider transition-all duration-300 group-hover:tracking-widest group-hover:text-primary">
+                                        {card.label}
+                                    </span>
+                                    <ArrowRight className="w-4 h-4 text-foreground transition-all duration-300 group-hover:translate-x-1 group-hover:text-primary" />
+                                </div>
+
+                                {/* Border Effect on Hover */}
+                                <div className="absolute inset-0 border border-border/0 group-hover:border-primary/60 transition-colors duration-300 rounded-lg" />
                             </Link>
-                        </div>
+                        ))}
                     </div>
                 </div>
 
-                {/* Right Side - Image Grid */}
-                <div className="hidden lg:flex lg:col-span-5 flex-col justify-center gap-6 pr-6 py-20">
-                    {sideImages.map((image, index) => (
-                        <Link
-                            key={image.id}
-                            href={image.link}
-                            className="group relative h-48 overflow-hidden shadow-2xl transform transition-all duration-500 hover:scale-105"
-                            style={{
-                                animationDelay: `${(index + 1) * 200}ms`,
-                            }}
+                {/* Tablet and Desktop Layout */}
+                <div className="hidden md:flex flex-col min-h-screen lg:min-h-[100vh] py-6 md:py-8 lg:py-0">
+                    {/* Main Content Area */}
+                    <div className="flex-1 flex flex-col lg:flex-row items-end lg:items-stretch p-6 md:p-8 lg:p-12 gap-6 lg:gap-8">
+                        {/* Left Side - Tagline */}
+                        <div
+                            className={`flex-1 flex items-end pb-4 lg:pb-8 transition-all duration-1000 delay-300 ${isVisible
+                                ? 'opacity-100 translate-y-0'
+                                : 'opacity-0 translate-y-8'
+                                }`}
                         >
-                            <img
-                                src={image.src}
-                                alt={image.alt}
-                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                            />
-                            <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-transparent" />
-                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
-
-                            <div className="absolute bottom-0 right-0 p-6">
-                                <span className="text-white text-sm font-light tracking-[0.2em] opacity-90 group-hover:opacity-100 group-hover:tracking-[0.25em] transition-all duration-300">
-                                    {image.label}
-                                </span>
+                            <div className="space-y-3">
+                                <h1 className="text-foreground text-6xl lg:text-7xl xl:text-8xl font-light tracking-wide leading-none uppercase">
+                                    Qiolia
+                                </h1>
+                                <p className="text-muted-foreground text-xl lg:text-2xl font-light tracking-wide">
+                                    Experience the authentic flavors of the world
+                                </p>
                             </div>
+                        </div>
 
-                            {/* Hover Border Effect */}
-                            <div className="absolute inset-0 border-2 border-white/0 group-hover:border-white/30 transition-colors duration-300" />
-                        </Link>
-                    ))}
+                        {/* Right Side - Cards (row on medium, column on large) */}
+                        <div className="w-full lg:w-auto lg:flex-shrink-0 pb-4 lg:pb-8">
+                            <div className="grid grid-cols-3 lg:grid-cols-1 gap-4 lg:gap-4 lg:w-80 xl:w-96">
+                                {cards.map((card, index) => (
+                                    <Link
+                                        key={card.id}
+                                        href={card.link}
+                                        className={`group relative h-48 lg:h-40 xl:h-48 overflow-hidden rounded-lg transition-all duration-700 ${isVisible
+                                            ? 'opacity-100 translate-x-0'
+                                            : 'opacity-0 translate-x-8'
+                                            } hover:scale-[1.02] hover:shadow-xl`}
+                                        style={{
+                                            transitionDelay: `${(index + 1) * 150}ms`,
+                                        }}
+                                    >
+                                        {/* Card Image */}
+                                        <div className="absolute inset-0">
+                                            <img
+                                                src={card.src}
+                                                alt={card.alt}
+                                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                            />
+                                        </div>
+
+                                        {/* Gradient Overlay */}
+                                        <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/40 to-transparent" />
+
+                                        {/* Hover Overlay */}
+                                        {/* <div className="absolute inset-0 bg-background/0 group-hover:bg-primary/5 transition-colors duration-300" /> */}
+
+                                        {/* Card Label */}
+                                        <div className="absolute bottom-0 right-0 p-5 flex items-center gap-2">
+                                            <span className="text-foreground text-sm md:text-base font-light tracking-wider transition-all duration-300 group-hover:tracking-widest group-hover:text-primary">
+                                                {card.label}
+                                            </span>
+                                            <ArrowRight className="w-4 h-4 text-foreground transition-all duration-300 group-hover:translate-x-1 group-hover:text-primary" />
+                                        </div>
+
+                                        {/* Border Effect on Hover */}
+                                        <div className="absolute inset-0 border border-border/0 group-hover:border-primary/60 transition-colors duration-300 rounded-lg" />
+                                    </Link>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-
-            {/* Social Media Links - Bottom Left */}
-            <div className="absolute bottom-8 left-6 sm:left-12 flex items-center space-x-6 z-10">
-                <a
-                    href="https://instagram.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-white/60 hover:text-white transition-colors duration-300"
-                    aria-label="Instagram"
-                >
-                    <Instagram className="w-5 h-5" />
-                </a>
-                <a
-                    href="https://facebook.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-white/60 hover:text-white transition-colors duration-300"
-                    aria-label="Facebook"
-                >
-                    <Facebook className="w-5 h-5" />
-                </a>
-                <a
-                    href="https://twitter.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-white/60 hover:text-white transition-colors duration-300"
-                    aria-label="Twitter"
-                >
-                    <Twitter className="w-5 h-5" />
-                </a>
-            </div>
-
-            {/* Scroll Indicator */}
-            <div className="absolute bottom-8 right-6 sm:right-12 flex flex-col items-center space-y-2 animate-bounce">
-                <div className="w-px h-16 bg-linear-to-b from-white/0 via-white/60 to-white/0" />
-                <span className="text-white/40 text-xs tracking-widest rotate-90 origin-center mt-8">
-                    SCROLL
-                </span>
             </div>
         </section>
     );
