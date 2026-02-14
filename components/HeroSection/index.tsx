@@ -83,7 +83,7 @@ export default function HeroSection() {
             src: '/assets/reservation.webp',
             alt: 'Restaurant Ambiance',
             label: 'Reservations',
-            link: '/book-a-table',
+            link: '/reservation',
         },
         {
             id: 3,
@@ -150,7 +150,7 @@ export default function HeroSection() {
                     </div>
 
                     {/* Cards Section - Fixed at bottom */}
-                    <div className="bg-gradient-to-t from-background via-background/95 to-transparent p-6 pt-8 pb-8 space-y-4">
+                    <div className="bg-linear-to-t from-background via-background/95 to-transparent p-6 pt-8 pb-8 space-y-4">
                         {cards.map((card, index) => (
                             <Link
                                 key={card.id}
@@ -173,7 +173,7 @@ export default function HeroSection() {
                                 </div>
 
                                 {/* Gradient Overlay */}
-                                <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/40 to-transparent" />
+                                <div className="absolute inset-0 bg-linear-to-t from-background/90 via-background/40 to-transparent" />
 
                                 {/* Hover Overlay */}
                                 <div className="absolute inset-0 bg-background/0 group-hover:bg-primary/10 transition-colors duration-300" />
@@ -194,7 +194,7 @@ export default function HeroSection() {
                 </div>
 
                 {/* Tablet and Desktop Layout */}
-                <div className="hidden md:flex flex-col min-h-screen lg:min-h-[100vh] py-6 md:py-8 lg:py-0">
+                <div className="hidden md:flex flex-col min-h-screen lg:min-h-screen py-6 md:py-8 lg:py-0">
                     {/* Main Content Area */}
                     <div className="flex-1 flex flex-col lg:flex-row items-end lg:items-stretch p-6 md:p-8 lg:p-12 gap-6 lg:gap-8">
                         {/* Left Side - Tagline */}
@@ -215,7 +215,7 @@ export default function HeroSection() {
                         </div>
 
                         {/* Right Side - Cards (row on medium, column on large) */}
-                        <div className="w-full lg:w-auto lg:flex-shrink-0 pb-4 lg:pb-8">
+                        <div className="w-full lg:w-auto lg:shrink-0 pb-4 lg:pt-24 xl:pt-8 transition-all duration-300">
                             <div className="grid grid-cols-3 lg:grid-cols-1 gap-4 lg:gap-4 lg:w-80 xl:w-96">
                                 {cards.map((card, index) => (
                                     <Link
@@ -239,7 +239,7 @@ export default function HeroSection() {
                                         </div>
 
                                         {/* Gradient Overlay */}
-                                        <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/40 to-transparent" />
+                                        <div className="absolute inset-0 bg-linear-to-t from-background/90 via-background/40 to-transparent" />
 
                                         {/* Hover Overlay */}
                                         {/* <div className="absolute inset-0 bg-background/0 group-hover:bg-primary/5 transition-colors duration-300" /> */}
