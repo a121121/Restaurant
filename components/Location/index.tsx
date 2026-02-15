@@ -1,64 +1,313 @@
+'use client'
+
 import Image from 'next/image';
+import { Rating } from 'react-simple-star-rating';
+import { motion, Variants } from 'framer-motion';
 
 export default function Location() {
+    // Animation variants
+    const containerVariants: Variants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.15,
+                delayChildren: 0.1
+            }
+        }
+    };
+
+    const fadeInUp: Variants = {
+        hidden: { opacity: 0, y: 40 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: {
+                duration: 0.6,
+                ease: [0.25, 0.46, 0.45, 0.94] as const
+            }
+        }
+    };
+
+    const fadeInLeft: Variants = {
+        hidden: { opacity: 0, x: -40 },
+        visible: {
+            opacity: 1,
+            x: 0,
+            transition: {
+                duration: 0.7,
+                ease: [0.25, 0.46, 0.45, 0.94] as const
+            }
+        }
+    };
+
+    const fadeInRight: Variants = {
+        hidden: { opacity: 0, x: 40 },
+        visible: {
+            opacity: 1,
+            x: 0,
+            transition: {
+                duration: 0.7,
+                ease: [0.25, 0.46, 0.45, 0.94] as const
+            }
+        }
+    };
+
+    const scaleIn: Variants = {
+        hidden: { opacity: 0, scale: 0.9 },
+        visible: {
+            opacity: 1,
+            scale: 1,
+            transition: {
+                duration: 0.5,
+                ease: [0.25, 0.46, 0.45, 0.94] as const
+            }
+        }
+    };
+
+    const reviewCardVariants: Variants = {
+        hidden: { opacity: 0, y: 20 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: {
+                duration: 0.5,
+                ease: [0.25, 0.46, 0.45, 0.94] as const
+            }
+        }
+    };
+
     return (
         <section
-            className="relative mx-auto w-full overflow-hidden p-4"
+            className="relative mx-auto w-full overflow-hidden px-4"
             role="map"
             aria-label="Qiolia Location on Google Maps"
         >
-            <div className="flex flex-col lg:flex-row gap-4">
+            <motion.div
+                className="flex flex-col lg:flex-row gap-4"
+                variants={containerVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-100px" }}
+            >
 
                 {/* LEFT SIDE */}
-                <div className="relative w-full lg:w-1/2 min-h-[300px] rounded-xl overflow-hidden">
+                <motion.div
+                    className="relative w-full lg:w-1/2 min-h-[400px] md:min-h-[500px] lg:min-h-[600px] rounded-xl overflow-hidden"
+                    variants={fadeInLeft}
+                >
                     {/* Image */}
-                    <Image
-                        src="/assets/about.webp"
-                        alt="Description"
-                        fill
-                        className="object-cover"
-                    />
+                    <motion.div
+                        initial={{ scale: 1.2 }}
+                        whileInView={{ scale: 1 }}
+                        transition={{ duration: 1.2, ease: [0.25, 0.46, 0.45, 0.94] as const }}
+                        viewport={{ once: true }}
+                        className="absolute inset-0 w-full h-full"
+                    >
+                        <Image
+                            src="/assets/about.webp"
+                            alt="About us"
+                            fill
+                            className="object-cover"
+                        />
+                    </motion.div>
 
                     {/* Overlay */}
-                    <div className="absolute inset-0 bg-black/40" />
+                    <motion.div
+                        className="absolute inset-0 bg-black/40"
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                        viewport={{ once: true }}
+                    />
 
                     {/* Text */}
-                    <div className="absolute bottom-6 left-6 z-10 text-foreground">
+                    <motion.div
+                        className="absolute bottom-6 left-6 z-10 text-foreground"
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.4 }}
+                        viewport={{ once: true }}
+                    >
                         <h3 className="text-6xl uppercase tracking-wide text-center">About Us</h3>
-                        {/* <p className="text-sm">Short description here</p> */}
-                    </div>
-                </div>
+                    </motion.div>
+                </motion.div>
 
 
                 {/* RIGHT SIDE */}
-                <div className="flex flex-col w-full lg:w-1/2 gap-4">
+                <motion.div
+                    className="flex flex-col w-full lg:w-1/2 gap-4"
+                    variants={fadeInRight}
+                >
 
                     {/* TOP ROW */}
-                    <div className="flex flex-col md:flex-row gap-4">
-                        <div className="w-full md:w-3/5 h-auto bg-background rounded-xl border" >
+                    <motion.div
+                        className="flex flex-col md:flex-row gap-4"
+                        variants={containerVariants}
+                    >
+                        <motion.div
+                            className="w-full md:w-3/5 h-auto bg-background rounded-xl border"
+                            variants={scaleIn}
+                            whileHover={{ y: -5, transition: { duration: 0.3 } }}
+                        >
                             <div className='flex flex-col justify-center items-start p-6 text-foreground gap-6'>
-                                <h3 className='text-3xl uppercase tracking-wide'>Hello</h3>
-                                <p className='text-muted-foreground text-justify'>Lorem ipsum dolor nostrum ullam reprehenderit rem. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.</p>
+                                <motion.h3
+                                    className='text-3xl uppercase tracking-wide'
+                                    initial={{ opacity: 0, x: -20 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    transition={{ duration: 0.5, delay: 0.2 }}
+                                    viewport={{ once: true }}
+                                >
+                                    art of flavour
+                                </motion.h3>
+                                <motion.p
+                                    className='text-muted-foreground text-justify'
+                                    initial={{ opacity: 0 }}
+                                    whileInView={{ opacity: 1 }}
+                                    transition={{ duration: 0.5, delay: 0.3 }}
+                                    viewport={{ once: true }}
+                                >
+                                    Where culinary craftsmanship meets modern elegance. Indulge in the finest sushi, expertly curated to elevate your dining experience.
+                                </motion.p>
                             </div>
-                        </div>
-                        <div className="w-full md:w-2/5 h-[120px] md:h-[180px] bg-background rounded-xl border" />
-                    </div>
+                        </motion.div>
+                        <motion.div
+                            className="w-full md:w-2/5 min-h-[250px] md:min-h-[200px] relative bg-background rounded-xl border overflow-hidden"
+                            variants={scaleIn}
+                            whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
+                        >
+                            <motion.div
+                                initial={{ scale: 1.2 }}
+                                whileInView={{ scale: 1 }}
+                                transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94] as const }}
+                                viewport={{ once: true }}
+                                className="absolute inset-0 w-full h-full"
+                            >
+                                <Image
+                                    src="/assets/artofflavour.webp"
+                                    alt="About us"
+                                    fill
+                                    className="object-cover"
+                                />
+                            </motion.div>
+                        </motion.div>
+                    </motion.div>
 
                     {/* MIDDLE ROW */}
-                    <div className="flex flex-col md:flex-row gap-4">
-                        <div className="w-full md:flex-1 h-[100px] md:h-[140px] bg-background rounded-xl border" />
-                        <div className="w-full md:flex-1 h-[100px] md:h-[140px] bg-background rounded-xl border" />
-                        <div className="w-full md:flex-1 h-[100px] md:h-[140px] bg-background rounded-xl border" />
-                    </div>
+                    <motion.div
+                        className="flex flex-col md:flex-row gap-4"
+                        variants={containerVariants}
+                    >
+                        {[
+                            { platform: 'TRIP ADVISOR', text: 'Amazing Sushi' },
+                            { platform: 'Google maps', text: 'Outstanding' },
+                            { platform: 'TRIP ADVISOR', text: 'Amazing Sushi' }
+                        ].map((review, index) => (
+                            <motion.div
+                                key={index}
+                                className="w-full md:flex-1 h-auto bg-background rounded-xl border"
+                                variants={reviewCardVariants}
+                                whileHover={{
+                                    y: -8,
+                                    boxShadow: "0 10px 30px rgba(0,0,0,0.15)",
+                                    transition: { duration: 0.3 }
+                                }}
+                            >
+                                <div className='flex flex-col justify-center items-center p-6 text-foreground gap-3'>
+                                    <motion.div
+                                        initial={{ opacity: 0, scale: 0.5 }}
+                                        whileInView={{ opacity: 1, scale: 1 }}
+                                        transition={{ duration: 0.5, delay: 0.1 + index * 0.1 }}
+                                        viewport={{ once: true }}
+                                    >
+                                        <Rating
+                                            initialValue={5}
+                                            readonly
+                                            allowFraction
+                                            SVGclassName="inline-block"
+                                            size={24}
+                                            fillColor='#F5EEE0'
+                                        />
+                                    </motion.div>
+                                    <motion.h3
+                                        className='text-2xl uppercase tracking-wide p-0 m-0'
+                                        initial={{ opacity: 0 }}
+                                        whileInView={{ opacity: 1 }}
+                                        transition={{ duration: 0.4, delay: 0.2 + index * 0.1 }}
+                                        viewport={{ once: true }}
+                                    >
+                                        {review.platform}
+                                    </motion.h3>
+                                    <motion.p
+                                        className='text-muted-foreground text-justify p-0 m-0'
+                                        initial={{ opacity: 0 }}
+                                        whileInView={{ opacity: 1 }}
+                                        transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
+                                        viewport={{ once: true }}
+                                    >
+                                        {review.text}
+                                    </motion.p>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </motion.div>
 
                     {/* BOTTOM ROW */}
-                    <div className="flex flex-col md:flex-row gap-4">
-                        <div className="w-full md:w-3/5 h-[120px] md:h-[180px] bg-background rounded-xl border" />
-                        <div className="w-full md:w-2/5 h-[120px] md:h-[180px] bg-background rounded-xl border" />
-                    </div>
+                    <motion.div
+                        className="flex flex-col md:flex-row gap-4"
+                        variants={containerVariants}
+                    >
+                        <motion.div
+                            className="w-full md:w-2/5 min-h-[250px] md:min-h-[200px] relative bg-background rounded-xl border overflow-hidden"
+                            variants={scaleIn}
+                            whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
+                        >
+                            <motion.div
+                                initial={{ scale: 1.2 }}
+                                whileInView={{ scale: 1 }}
+                                transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94] as const }}
+                                viewport={{ once: true }}
+                                className="absolute inset-0 w-full h-full"
+                            >
+                                <Image
+                                    src="/assets/chef.avif"
+                                    alt="About us"
+                                    fill
+                                    className="object-cover"
+                                />
+                            </motion.div>
+                        </motion.div>
+                        <motion.div
+                            className="w-full md:w-3/5 h-auto bg-background rounded-xl border"
+                            variants={scaleIn}
+                            whileHover={{ y: -5, transition: { duration: 0.3 } }}
+                        >
+                            <div className='flex flex-col justify-center items-start p-6 text-foreground gap-6'>
+                                <motion.h3
+                                    className='text-3xl uppercase tracking-wide'
+                                    initial={{ opacity: 0, x: -20 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    transition={{ duration: 0.5, delay: 0.2 }}
+                                    viewport={{ once: true }}
+                                >
+                                    our story
+                                </motion.h3>
+                                <motion.p
+                                    className='text-muted-foreground text-justify'
+                                    initial={{ opacity: 0 }}
+                                    whileInView={{ opacity: 1 }}
+                                    transition={{ duration: 0.5, delay: 0.3 }}
+                                    viewport={{ once: true }}
+                                >
+                                    Founded with a passion for culinary excellence, Qitchen's journey began in the heart of Prague. Over years, it evolved into a haven for sushi enthusiasts, celebrated for its artful mastery and devotion to redefining gastronomy.
+                                </motion.p>
+                            </div>
+                        </motion.div>
+                    </motion.div>
 
-                </div>
-            </div>
+
+                </motion.div>
+            </motion.div>
         </section>
     );
 }
