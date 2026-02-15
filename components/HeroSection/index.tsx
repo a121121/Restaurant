@@ -98,7 +98,7 @@ export default function HeroSection() {
         <section
             className="relative mx-auto w-full max-h-screen overflow-hidden bg-black"
             role="banner"
-            aria-label="Qiolia Demo Website for Businesses"
+            aria-label="noir Demo Website for Businesses"
         >
             {/* Background Image (shown until video is ready) */}
             <Image
@@ -206,7 +206,7 @@ export default function HeroSection() {
                         >
                             <div className="space-y-3">
                                 <h1 className="text-foreground text-6xl lg:text-7xl xl:text-8xl font-light tracking-wide leading-none uppercase">
-                                    Qiolia
+                                    noir
                                 </h1>
                                 <p className="text-muted-foreground text-xl lg:text-2xl font-light tracking-wide">
                                     Experience the authentic flavors of the world

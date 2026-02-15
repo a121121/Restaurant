@@ -45,7 +45,7 @@ export default function Navbar() {
                         {/* Logo */}
                         <Link href="/" className="flex items-center">
                             <span className="font-heading text-2xl md:text-3xl text-[#E8E6D9] tracking-widest uppercase">
-                                Qiolia
+                                noir
                             </span>
                         </Link>
                     </div>
@@ -95,7 +95,7 @@ export default function Navbar() {
                         onClick={() => setIsMobileMenuOpen(false)}
                         className="mb-8 font-heading text-4xl text-[#E8E6D9] tracking-widest uppercase"
                     >
-                        Qiolia
+                        noir
                     </Link>
 
                     {/* Mobile Links */}

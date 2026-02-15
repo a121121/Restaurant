@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { Rating } from 'react-simple-star-rating';
 import { motion, Variants } from 'framer-motion';
 
-export default function Location() {
+export default function About() {
     // Animation variants
     const containerVariants: Variants = {
         hidden: { opacity: 0 },
@@ -114,7 +114,14 @@ export default function Location() {
 
                     {/* Overlay */}
                     <motion.div
-                        className="absolute inset-0 bg-black/40"
+                        className="absolute inset-0 bg-black/20"
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                        viewport={{ once: true }}
+                    />
+                    <motion.div
+                        className="absolute inset-0 bg-linear-to-t from-black/80 to-transparent"
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
