@@ -143,7 +143,7 @@ export default function About() {
 
                 {/* RIGHT SIDE */}
                 <motion.div
-                    className="flex flex-col w-full lg:w-1/2 gap-4"
+                    className="flex flex-col w-full lg:w-1/2 gap-4 "
                     variants={fadeInRight}
                 >
 
@@ -153,7 +153,7 @@ export default function About() {
                         variants={containerVariants}
                     >
                         <motion.div
-                            className="w-full md:w-3/5 h-auto bg-background rounded-xl border"
+                            className="w-full md:w-3/5 h-auto bg-background rounded-xl border royal-card"
                             variants={scaleIn}
                             whileHover={{ y: -5, transition: { duration: 0.3 } }}
                         >
@@ -208,11 +208,11 @@ export default function About() {
                         {[
                             { platform: 'TRIP ADVISOR', text: 'Amazing Sushi' },
                             { platform: 'Google maps', text: 'Outstanding' },
-                            { platform: 'TRIP ADVISOR', text: 'Amazing Sushi' }
+                            { platform: 'Trust pilot', text: 'Treat for every soul' }
                         ].map((review, index) => (
                             <motion.div
                                 key={index}
-                                className="w-full md:flex-1 h-auto bg-background rounded-xl border"
+                                className="w-full md:flex-1 h-auto bg-background rounded-xl border royal-card"
                                 variants={reviewCardVariants}
                                 whileHover={{
                                     y: -8,
@@ -285,7 +285,7 @@ export default function About() {
                             </motion.div>
                         </motion.div>
                         <motion.div
-                            className="w-full md:w-3/5 h-auto bg-background rounded-xl border"
+                            className="w-full md:w-3/5 h-auto bg-background rounded-xl border royal-card"
                             variants={scaleIn}
                             whileHover={{ y: -5, transition: { duration: 0.3 } }}
                         >

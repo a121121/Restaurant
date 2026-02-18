@@ -153,7 +153,7 @@ export default function Contact() {
                         variants={containerVariants}
                     >
                         <motion.div
-                            className="w-full md:w-1/2 h-auto md:h-full md:min-h-[350px] bg-background rounded-xl border"
+                            className="w-full md:w-1/2 h-auto md:h-full md:min-h-[350px] bg-background rounded-xl border royal-card"
                             variants={scaleIn}
                             whileHover={{ y: -5, transition: { duration: 0.3 } }}
                         >
@@ -186,7 +186,7 @@ export default function Contact() {
                             </div>
                         </motion.div>
                         <motion.div
-                            className="w-full md:w-1/2 h-auto md:h-full md:min-h-[350px] bg-background rounded-xl border"
+                            className="w-full md:w-1/2 h-auto md:h-full md:min-h-[350px] bg-background rounded-xl border royal-card"
                             variants={scaleIn}
                             whileHover={{ y: -5, transition: { duration: 0.3 } }}
                         >
