@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Forum, Inter } from "next/font/google"
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 
 const forum = Forum({
   subsets: ["latin"],
@@ -30,7 +32,9 @@ export default function RootLayout({
         className={`antialiased`}
       >
         <ThemeProvider>
+          <Navbar />
           {children}
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

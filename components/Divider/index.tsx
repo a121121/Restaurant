@@ -2,7 +2,7 @@ import React from "react";
 
 const Divider: React.FC = () => {
     return (
-        <div className="flex flex-col items-center py-14 lg:py-20 ">
+        <div className="flex flex-col items-center py-10 lg:py-20 ">
             <div
                 className="flex items-center justify-center w-[80%] gap-3"
                 role="separator"
