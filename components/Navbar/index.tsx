@@ -66,7 +66,7 @@ export default function Navbar() {
                     {/* Right Section: CTA Button */}
                     <div className="ml-4 md:ml-0">
                         <Link
-                            href="/book-a-table"
+                            href="/reservation"
                             className="inline-flex items-center justify-center px-4 py-2 md:px-6 md:py-3 border border-white/20 rounded-xl text-xs md:text-sm tracking-[0.15em] text-[#E8E6D9] hover:bg-[#E8E6D9] hover:text-black transition-all duration-300 uppercase whitespace-nowrap"
                         >
                             Book a Table
@@ -99,7 +99,7 @@ export default function Navbar() {
                     </Link>
 
                     {/* Mobile Links */}
-                    {[...navLinks, { href: '/book-a-table', label: 'BOOK A TABLE' }].map((link, index) => (
+                    {[...navLinks, { href: '/reservation', label: 'BOOK A TABLE' }].map((link, index) => (
                         <Link
                             key={link.href}
                             href={link.href}

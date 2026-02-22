@@ -4,37 +4,18 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { MenuItem, type MenuItemData } from "./MenuItem";
+import { menuData } from "@/data/menu";
+import type { MenuData } from "@/data/menu";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 interface Category {
     id: string;
     label: string;
-    icon: string;
+    icon?: string;
 }
 
-interface MenuSection {
-    category: string;
-    items: MenuItemData[];
-}
 
-interface MenuData {
-    restaurant: {
-        name: string;
-        tagline: string;
-        heroImage: string;
-    };
-    categories: Category[];
-    menu: MenuSection[];
-}
-
-// ─── Data fetching ─────────────────────────────────────────────────────────────
-
-async function fetchMenuData(): Promise<MenuData> {
-    const res = await fetch("/menu-data.json", { cache: "no-store" });
-    if (!res.ok) throw new Error("Failed to load menu data");
-    return res.json();
-}
 
 // ─── Category Nav ─────────────────────────────────────────────────────────────
 
@@ -81,19 +62,17 @@ function CategoryNav({
 function MenuSection({
     category,
     label,
-    icon,
+
     items,
 }: {
     category: string;
     label: string;
-    icon: string;
     items: MenuItemData[];
 }) {
     return (
         // scroll-mt accounts for sticky tabs height so the section heading isn't hidden behind them
         <section id={`section-${category}`} className="scroll-mt-14 pt-2 pb-6">
             <h3 className="text-center text-xl sm:text-2xl text-foreground mb-4 tracking-wide uppercase">
-                <span className="mr-2">{icon}</span>
                 {label}
             </h3>
             <div>
@@ -108,8 +87,7 @@ function MenuSection({
 // ─── Main Page ─────────────────────────────────────────────────────────────────
 
 export default function MenuPage() {
-    const [data, setData] = useState<MenuData | null>(null);
-    const [error, setError] = useState(false);
+    const data: MenuData = menuData;
     const [activeCategory, setActiveCategory] = useState<string>("");
     const menuPanelRef = useRef<HTMLDivElement>(null);
     const observerRef = useRef<IntersectionObserver | null>(null);
@@ -120,14 +98,8 @@ export default function MenuPage() {
     // Height of the sticky tabs bar in px — keep in sync with the nav's py-3 + button height
     const TABS_HEIGHT = 52;
 
-    // ── Load menu data ──
     useEffect(() => {
-        fetchMenuData()
-            .then((d) => {
-                setData(d);
-                setActiveCategory(d.categories[0]?.id ?? "");
-            })
-            .catch(() => setError(true));
+        setActiveCategory(menuData.categories[0]?.id ?? "");
     }, []);
 
     // ── Setup IntersectionObserver ──
@@ -194,26 +166,6 @@ export default function MenuPage() {
         }
     };
 
-    // ── Loading / Error states ──
-    if (error) {
-        return (
-            <div className="flex items-center justify-center h-screen text-muted-foreground">
-                <p>
-                    Could not load menu. Make sure{" "}
-                    <code className="text-foreground font-mono text-sm">/public/menu-data.json</code>{" "}
-                    exists.
-                </p>
-            </div>
-        );
-    }
-
-    if (!data) {
-        return (
-            <div className="flex items-center justify-center h-screen text-muted-foreground">
-                <p className="animate-pulse">Loading menu…</p>
-            </div>
-        );
-    }
 
     const { restaurant, categories, menu } = data;
 
@@ -239,13 +191,13 @@ export default function MenuPage() {
                         alt={restaurant.name}
                         fill
                         priority
-                        className="object-cover rounded-lg"
+                        className="object-cover rounded-2xl"
                         sizes="(max-width: 1024px) 100vw, 45vw"
                     />
                     <div className="absolute inset-0 bg-linear-to-t from-black/80 via-background/30 to-transparent rounded-lg" />
                     <div className="absolute bottom-0 left-0 right-0 p-6 lg:p-10">
-                        <h1 className="text-3xl lg:text-6xl uppercase tracking-wide text-center lg:text-left">
-                            {restaurant.name}
+                        <h1 className="text-3xl lg:text-6xl uppercase tracking-wider text-center lg:text-left">
+                            Menu
                         </h1>
                         <p className="mt-2 text-sm sm:text-base text-muted-foreground text-center lg:text-left max-w-xs">
                             {restaurant.tagline}
@@ -276,7 +228,6 @@ export default function MenuPage() {
                                 key={section.category}
                                 category={section.category}
                                 label={cat.label}
-                                icon={cat.icon}
                                 items={section.items}
                             />
                         );

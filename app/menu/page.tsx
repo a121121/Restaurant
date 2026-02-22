@@ -6,10 +6,11 @@
 import type { Metadata } from "next";
 import MenuPage from "@/components/menu/MenuPage";
 import Divider from "@/components/Divider";
+import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
-  title: "Menu — The Golden Wok",
-  description: "Browse our full menu: deals, starters, Chinese, Thai, desserts, and drinks.",
+  title: siteConfig.menuName,
+  description: siteConfig.menuDescription,
 };
 
 export default function Page() {

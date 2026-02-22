@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import { siteConfig } from "@/config/site";
 
 const forum = Forum({
   subsets: ["latin"],
@@ -17,8 +18,8 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "Your Restaurant Website",
-  description: "Your tasteful journey begins here",
+  title: siteConfig.name,
+  description: siteConfig.description,
 };
 
 export default function RootLayout({
