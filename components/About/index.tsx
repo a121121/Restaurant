@@ -82,6 +82,7 @@ export default function About() {
             className="relative mx-auto w-full overflow-hidden px-4"
             role="map"
             aria-label="Qiolia Location on Google Maps"
+            id="about"
         >
             <motion.div
                 className="flex flex-col lg:flex-row gap-4"

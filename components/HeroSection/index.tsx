@@ -90,7 +90,7 @@ export default function HeroSection() {
             src: '/assets/restaurant.webp',
             alt: 'Restaurant Interior',
             label: 'Our Restaurant',
-            link: '/about',
+            link: '#about',
         },
     ];
 
@@ -126,7 +126,7 @@ export default function HeroSection() {
             </video> */}
 
             {/* Overlay gradient for better text readability */}
-            <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/50 to-black/70" />
+            <div className="absolute inset-0 bg-linear-to-tr from-black/70 via-black/50 to-black/10" />
 
             {/* Content Container */}
             <div className="relative min-h-screen flex flex-col">
@@ -155,7 +155,7 @@ export default function HeroSection() {
                             <Link
                                 key={card.id}
                                 href={card.link}
-                                className={`group relative h-32 overflow-hidden rounded-lg transition-all duration-700 block ${isVisible
+                                className={`group relative h-32 overflow-hidden border border-foreground/20 rounded-lg transition-all duration-700 block ${isVisible
                                     ? 'opacity-100 translate-y-0'
                                     : 'opacity-0 translate-y-8'
                                     } hover:scale-[1.02] hover:shadow-xl`}
@@ -164,10 +164,12 @@ export default function HeroSection() {
                                 }}
                             >
                                 {/* Card Image */}
-                                <div className="absolute inset-0">
-                                    <img
+                                <div className="absolute inset-0 ">
+                                    <Image
                                         src={card.src}
                                         alt={card.alt}
+                                        fill
+                                        priority
                                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                     />
                                 </div>

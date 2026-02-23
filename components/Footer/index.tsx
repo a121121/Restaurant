@@ -21,9 +21,9 @@ export default function Footer() {
                 >
                     {[
                         { label: 'Menu', href: '/menu' },
-                        { label: 'About', href: '/about' },
-                        { label: 'Contact', href: '/contact' },
-                        { label: 'Reservations', href: '/reservations' },
+                        { label: 'About', href: '/#about' },
+                        { label: 'Contact', href: '/#contact' },
+                        { label: 'Reservations', href: '/reservation' },
                     ].map((link) => (
                         <Link
                             key={link.label}
@@ -49,14 +49,15 @@ export default function Footer() {
                     {/* Socials — left */}
                     <div className="flex items-center justify-center gap-5 order-2 md:order-1 md:justify-start">
                         {[
-                            { Icon: Instagram, label: 'Instagram', href: '#' },
-                            { Icon: Facebook, label: 'Facebook', href: '#' },
-                            { Icon: Twitter, label: 'Twitter', href: '#' },
+                            { Icon: Instagram, label: 'Instagram', href: 'https://www.instagram.com/' },
+                            { Icon: Facebook, label: 'Facebook', href: 'https://www.facebook.com/' },
+                            { Icon: Twitter, label: 'Twitter', href: 'https://x.com/' },
                         ].map(({ Icon, label, href }) => (
                             <Link
                                 key={label}
                                 href={href}
                                 aria-label={label}
+                                target="_blank"
                                 className="text-muted-foreground hover:text-foreground transition-colors duration-300"
                             >
                                 <Icon size={18} strokeWidth={1.5} />

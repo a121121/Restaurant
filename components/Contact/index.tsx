@@ -1,7 +1,6 @@
 'use client'
 
 import Image from 'next/image';
-import { Rating } from 'react-simple-star-rating';
 import { motion, Variants } from 'framer-motion';
 
 export default function Contact() {
@@ -82,6 +81,7 @@ export default function Contact() {
             className="relative mx-auto w-full overflow-hidden px-4"
             role="map"
             aria-label="Qiolia Location on Google Maps"
+            id="contact"
         >
             <motion.div
                 className="flex flex-col lg:flex-row-reverse gap-4"
