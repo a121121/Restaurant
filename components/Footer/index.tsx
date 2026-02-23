@@ -8,7 +8,7 @@ export default function Footer() {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer className="relative bg-background border-t border-border/40">
+        <footer className="relative border-border/40">
             <div className="container mx-auto px-6 pb-4 md:pb-8">
 
                 {/* Nav Links Row */}
