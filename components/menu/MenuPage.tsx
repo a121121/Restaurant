@@ -181,7 +181,7 @@ export default function MenuPage() {
          * To make tabs sit under your site's top nav on mobile/md, set in globals.css:
          *   :root { --nav-height: 64px; }   ← replace with your actual nav height
          */
-        <div className="lg:flex lg:h-screen lg:overflow-hidden bg-background mx-4 my-4">
+        <div className="lg:flex lg:h-screen lg:overflow-hidden bg-background royal-card mx-4 my-4">
 
             {/* ── LEFT: Fixed hero image ── */}
             <aside className="lg:w-[50%] lg:shrink-0 lg:sticky lg:top-0 lg:h-screen relative">

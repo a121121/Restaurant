@@ -158,7 +158,7 @@ export default function About() {
                             variants={scaleIn}
                             whileHover={{ y: -5, transition: { duration: 0.3 } }}
                         >
-                            <div className='flex flex-col justify-center items-start p-6 text-foreground gap-6'>
+                            <div className='flex flex-col justify-center md:items-start items-center p-6 text-foreground gap-6'>
                                 <motion.h3
                                     className='text-3xl uppercase tracking-wide'
                                     initial={{ opacity: 0, x: -20 }}
@@ -169,7 +169,7 @@ export default function About() {
                                     art of flavour
                                 </motion.h3>
                                 <motion.p
-                                    className='text-muted-foreground text-justify'
+                                    className='text-muted-foreground md:text-justify text-center'
                                     initial={{ opacity: 0 }}
                                     whileInView={{ opacity: 1 }}
                                     transition={{ duration: 0.5, delay: 0.3 }}
@@ -290,7 +290,7 @@ export default function About() {
                             variants={scaleIn}
                             whileHover={{ y: -5, transition: { duration: 0.3 } }}
                         >
-                            <div className='flex flex-col justify-center items-start p-6 text-foreground gap-6'>
+                            <div className='flex flex-col justify-center md:items-start items-center p-6 text-foreground gap-6'>
                                 <motion.h3
                                     className='text-3xl uppercase tracking-wide'
                                     initial={{ opacity: 0, x: -20 }}
@@ -301,13 +301,15 @@ export default function About() {
                                     our story
                                 </motion.h3>
                                 <motion.p
-                                    className='text-muted-foreground text-justify'
+                                    className='text-muted-foreground md:text-justify hyphens-auto text-pretty text-center'
                                     initial={{ opacity: 0 }}
                                     whileInView={{ opacity: 1 }}
                                     transition={{ duration: 0.5, delay: 0.3 }}
                                     viewport={{ once: true }}
                                 >
-                                    Founded with a passion for culinary excellence, Qitchen's journey began in the heart of Prague. Over years, it evolved into a haven for sushi enthusiasts, celebrated for its artful mastery and devotion to redefining gastronomy.
+                                    Founded with a passion for culinary excellence, Qiolia was created to offer more than just a meal, but an experience. Our chefs blend traditional techniques with modern creativity, crafting each dish with precision and care.
+                                    <br /> <br />
+                                    From the freshest ingredients to the final presentation, every detail reflects our commitment to quality, flavor, and unforgettable dining moments.
                                 </motion.p>
                             </div>
                         </motion.div>

@@ -11,14 +11,14 @@ export default function ReservationPage() {
   return (
     <>
       <main className="min-h-screen bg-background mx-4 py-2 mt-2">
-        <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
+        <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen gap-4">
           {/* Left — Hero image */}
           <div className="lg:sticky lg:top-0 lg:h-screen">
             <ReservationHero />
           </div>
 
           {/* Right — Form */}
-          <div className="flex flex-col justify-center px-6 py-12 sm:px-10 lg:px-14 xl:px-20">
+          <div className="flex flex-col justify-center px-6 py-12 sm:px-10 lg:px-14 xl:px-20 royal-card border">
             <div className="w-full max-w-lg mx-auto">
               {/* Form header */}
               <div className="mb-8 space-y-1">

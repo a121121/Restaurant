@@ -29,7 +29,7 @@ export default function Navbar() {
             <nav
                 className={`fixed top-4 left-4 right-4 md:right-auto md:top-8 md:left-8 z-50 transition-all duration-300`}
             >
-                <div className="bg-background border border-white/10 rounded-2xl shadow-2xl px-2 py-1 max-w-full md:w-max flex items-center justify-between md:gap-6">
+                <div className="bg-background border border-white/10 rounded-2xl shadow-2xl px-2 py-1 max-w-full md:w-max flex items-center justify-between md:gap-6 royal-card">
 
                     {/* Left Section: Menu Toggle & Logo */}
                     <div className="flex items-center gap-4 md:gap-6">

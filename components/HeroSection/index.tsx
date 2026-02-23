@@ -155,7 +155,7 @@ export default function HeroSection() {
                             <Link
                                 key={card.id}
                                 href={card.link}
-                                className={`group relative h-32 overflow-hidden border border-foreground/20 rounded-lg transition-all duration-700 block ${isVisible
+                                className={`group relative h-32 overflow-hidden border rounded-lg transition-all duration-700 block ${isVisible
                                     ? 'opacity-100 translate-y-0'
                                     : 'opacity-0 translate-y-8'
                                     } hover:scale-[1.02] hover:shadow-xl`}
