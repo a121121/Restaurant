@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
+import OfferBadge from '../OfferBadge';
 
 const SKIP_FRAMES = 10;
 const VIDEO_FPS = 30;
@@ -18,57 +19,6 @@ export default function HeroSection() {
         setIsVisible(true);
     }, []);
 
-    useEffect(() => {
-        const video = videoRef.current;
-        if (!video) return;
-
-        video.muted = true;
-        video.volume = 0;
-        video.defaultMuted = true;
-
-        let hasSeeked = false;
-
-        const startPlaybackCorrectly = async () => {
-            try {
-                await video.play();
-                requestAnimationFrame(() => {
-                    video.currentTime = SKIP_TIME;
-                });
-            } catch {
-                // autoplay blocked
-            }
-        };
-
-        const handleSeeked = () => {
-            if (!hasSeeked && video.currentTime >= SKIP_TIME) {
-                hasSeeked = true;
-                setVideoReady(true);
-            }
-        };
-
-        const handleTimeUpdate = () => {
-            if (video.duration && video.currentTime >= video.duration - 0.05) {
-                video.currentTime = SKIP_TIME;
-                video.play().catch(() => { });
-            }
-        };
-
-        const handleVisibilityChange = () => {
-            document.hidden ? video.pause() : video.play().catch(() => { });
-        };
-
-        video.addEventListener('loadeddata', startPlaybackCorrectly);
-        video.addEventListener('seeked', handleSeeked);
-        video.addEventListener('timeupdate', handleTimeUpdate);
-        document.addEventListener('visibilitychange', handleVisibilityChange);
-
-        return () => {
-            video.removeEventListener('loadeddata', startPlaybackCorrectly);
-            video.removeEventListener('seeked', handleSeeked);
-            video.removeEventListener('timeupdate', handleTimeUpdate);
-            document.removeEventListener('visibilitychange', handleVisibilityChange);
-        };
-    }, []);
 
     const cards = [
         {
@@ -110,36 +60,23 @@ export default function HeroSection() {
                     }`}
             />
 
-            {/* Background Video (optional - uncomment to use) */}
-            {/* <video
-                ref={videoRef}
-                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
-                    videoReady ? 'opacity-100' : 'opacity-0'
-                }`}
-                style={{ objectPosition: 'center 25%' }}
-                playsInline
-                preload="auto"
-                poster="/assets/hero3.webp"
-                aria-hidden="true"
-            >
-                <source src="/assets/hero-bg.mp4" type="video/mp4" />
-            </video> */}
-
             {/* Overlay gradient for better text readability */}
             <div className="absolute inset-0 bg-linear-to-tr from-black/70 via-black/50 to-black/10" />
 
             {/* Content Container */}
-            <div className="relative min-h-screen flex flex-col">
+            <div className="relative max-h-screen flex flex-col">
                 {/* Mobile Layout - Stacked vertically */}
-                <div className="md:hidden flex flex-col h-screen">
+                <div className="md:hidden flex flex-col h-auto">
                     {/* Hero Section - Takes available space */}
-                    <div className="flex-1 flex items-end justify-center p-6 pb-8">
+                    <div className="flex-1 flex items-center justify-center p-6 pt-16 pb-4">
+
                         <div
                             className={`space-y-3 text-center transition-all duration-1000 delay-300 ${isVisible
-                                ? 'opacity-100 translate-y-0'
+                                ? 'opacity-100 translate-y-8'
                                 : 'opacity-0 translate-y-8'
                                 }`}
                         >
+                            <OfferBadge />
                             <h1 className="text-foreground text-5xl font-light tracking-tight leading-none">
                                 A tasteful culinary experience
                             </h1>
@@ -150,8 +87,8 @@ export default function HeroSection() {
                     </div>
 
                     {/* Cards Section - Fixed at bottom */}
-                    <div className="bg-linear-to-t from-background via-background/95 to-transparent p-6 pt-8 pb-8 space-y-4">
-                        {cards.map((card, index) => (
+                    <div className="p-6 pt-8 pb-8 space-y-4">
+                        {cards.slice(0, 2).map((card, index) => (
                             <Link
                                 key={card.id}
                                 href={card.link}
@@ -206,7 +143,9 @@ export default function HeroSection() {
                                 : 'opacity-0 translate-y-8'
                                 }`}
                         >
+
                             <div className="space-y-3">
+                                <OfferBadge />
                                 <h1 className="text-foreground text-6xl lg:text-7xl xl:text-8xl font-light tracking-wide leading-none uppercase">
                                     Qiolia
                                 </h1>
@@ -263,6 +202,6 @@ export default function HeroSection() {
                     </div>
                 </div>
             </div>
-        </section>
+        </section >
     );
 }

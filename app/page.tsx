@@ -15,6 +15,7 @@ export default function Home() {
         message="Ramadan Deal now on - Buy 1 Large Pizza Get 1 Small Free"
         speed={25}
       />
+
       <About />
       <Divider />
       <Testimonials />
